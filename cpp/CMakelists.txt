@@ -5,7 +5,7 @@ set (CMAKE_CXX_STANDARD 17)
 
 if (NOT CMAKE_VS_PLATFORM_NAME)
     set (CMAKE_VS_PLATFORM_NAME "x64")
-endf()
+endif()
 message("${CMAKE_VS_PLATFORM_NAME} architecture is use")
 
 project(bulk_rename CXX)
@@ -66,7 +66,6 @@ if(MSVC)
 		${DEFAULT_CXX_DEBUG_INFORMATION_FORMAT};
 		${DEFAULT_CXX_EXCEPTION_HANDLING}
     )
-
     set (COMMON_LINK_OPTIONs
 		$<$<CONFIG:Debug>:
 			/DEBUG;
@@ -85,6 +84,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target/${CMAKE_BUILD_TYPE
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target/${CMAKE_BUILD_TYPE}/${CMAKE_VS_PLATFORM_NAME})
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
-#add_subdirectory(src)
+add_subdirectory(src)
 #add_subdirectory(test)
 
