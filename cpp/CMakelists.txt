@@ -37,12 +37,54 @@ if(MSVC)
     set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS}")
     set(CMAKE_STATIC_LINKER_FLAGS_RELEASE "${CMAKE_STATIC_LINKER_FLAGS}")
 
+    # not sure if these 3 will work, but will give it a go
+    set (COMMON_COMPILE_DEFINITIONS
+        "$<$<CONFIG:DEBUG>:" 
+            "_DEBUG" 
+        ">"
+        "$<$<CONFIG:RELEASE>:" 
+            "_NDEBUG" 
+        ">"
+        "WIN32;"
+        "_CONSOLE;"
+        "UNICODE;"
+        "_UNICODE;"
+    )
+    set (COMMON_COMPILE_OPTIONS
+		$<$<CONFIG:Debug>:
+			${DEFAULT_CXX_DEBUG_RUNTIME_LIBRARY}
+		>
+		$<$<CONFIG:Release>:
+			/Oi;
+			${DEFAULT_CXX_RUNTIME_LIBRARY};
+			/Gy
+		>
+		/permissive-;
+		/sdl;
+		/W4;
+		/EHsc;
+		${DEFAULT_CXX_DEBUG_INFORMATION_FORMAT};
+		${DEFAULT_CXX_EXCEPTION_HANDLING}
+    )
+
+    set (COMMON_LINK_OPTIONs
+		$<$<CONFIG:Debug>:
+			/DEBUG;
+			/INCREMENTAL 
+		> 
+		$<$<CONFIG:Release>:
+			/OPT:REF;
+			/OPT:ICF;
+			/INCREMENTAL:NO
+		> 
+    )
 endif()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target/${CMAKE_BUILD_TYPE}/${CMAKE_VS_PLATFORM_NAME})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target/${CMAKE_BUILD_TYPE}/${CMAKE_VS_PLATFORM_NAME})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target/${CMAKE_BUILD_TYPE}/${CMAKE_VS_PLATFORM_NAME})
 
+include_directories(${CMAKE_SOURCE_DIR}/include)
 #add_subdirectory(src)
 #add_subdirectory(test)
 
